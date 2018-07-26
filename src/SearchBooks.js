@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import { Debounce } from 'react-throttle';
 import Rx from 'rxjs-compat/Rx';
 import './App.css';
+import Book from './Book';
 
 class SearchBooks extends React.Component{
   state = {
@@ -14,21 +15,20 @@ class SearchBooks extends React.Component{
 
   constructor() {
       super();
-      //this.searchInput = new Rx.Subject();
-      //this.searchInput.debounceTime(500).subscribe(param => {
-    //    this.fireSearchBook(param);
+
+
     //  });
     }
 
-  updateBookOnSearch(book: any, shelf: string) {
-      let t = this.state.books;
-      const bookToUpdate = t.filter(b => b.id === book.id)[0];
-      bookToUpdate.shelf = shelf;
-      this.setState({
-        books: t
-      });
-      this.props.onChange(book, shelf);
-    }
+  updateBookOnSearch = (book: any, shelf: string) => {
+    let t = this.state.books;
+    const bookToUpdate = t.filter(b => b.id === book.id)[0];
+    bookToUpdate.shelf = shelf;
+    this.setState({
+      books: t
+    });
+    this.props.onChange(book, shelf);
+  }
 
   updateQuery = (query: string) => {
    this.setState({
@@ -96,41 +96,8 @@ class SearchBooks extends React.Component{
           <ol className="books-grid">
 
             {this.state.books.map(book =>
-              <li key={book.id} className="book">
-                <div className="book-top">
-                  <div
-                    className="book-cover"
-                    style={{
-                      width: 128,
-                      height: 193,
-                      backgroundImage: (typeof book.imageLinks === 'undefined') ? ' ' : "url(" + book.imageLinks.thumbnail + ")"
-                    }}
-                  />
-                  <div className="book-shelf-changer">
-                    <select
-                      value={book.shelf}
-                      onChange={e => {
-                        this.updateBookOnSearch(book, e.target.value);
-                      }}
-                    >
-                      <option value="none" disabled>
-                        Move to...
-                      </option>
-                      <option value="currentlyReading">Currently Reading</option>
-                      <option value="wantToRead">Want to Read</option>
-                      <option value="read">Read</option>
-                      <option value="none">None</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="book-title">
-                  {book.title}
-                </div>
-                {book.authors &&
-                  <div className="book-authors">
-                    {book.authors[0]}
-                  </div>}
-              </li>
+              <Book book={book} onChange={this.updateBookOnSearch}/>
+
             )}
           </ol>
         </div>

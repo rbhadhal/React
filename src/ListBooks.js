@@ -8,11 +8,11 @@ import BookShelf from './BookShelf';
 class ListBooks extends React.Component{
   state = {};
 
-  handleChange = (bookId: string, e:any) =>{
+  handleChange = (book: string, shelf:string) =>{
     let b = this.props.books;
-    const book = b.filter(c=> c.id === bookId)[0];
-    book.shelf = e.target.value;
-    BooksAPI.update(book, e.target.value).then(response => {this.setState({books: b});
+    const bookToUpdate = b.filter(c=> c.id === book.id)[0];
+    book.shelf = shelf;
+    BooksAPI.update(bookToUpdate, shelf).then(response => {this.setState({books: b});
   });
 };
 
