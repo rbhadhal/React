@@ -17,7 +17,7 @@ class BookShelf extends React.Component{
             <div className='book-cover' style ={{
               width: 128,
               height:193,
-              backgroundImage: 'url(' + book.imageLinks.thumbnail + ')'
+              backgroundImage: (typeof book.imageLinks === 'undefined') ? ' ' : "url(" + book.imageLinks.thumbnail + ")"
             }}
             />
             <div className="book-shelf-changer">

@@ -1,6 +1,7 @@
 import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import {Link} from 'react-router-dom';
+import { Debounce } from 'react-throttle';
 import Rx from 'rxjs-compat/Rx';
 import './App.css';
 
@@ -80,12 +81,14 @@ class SearchBooks extends React.Component{
         <div className="search-books-bar">
           <Link to='/' className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
+            <Debounce time='800' handler='onChange'>
             <input
               type="text"
               placeholder="Search by title or author"
-              value ={this.state.query}
+              //value ={this.state.query}
               onChange={e => this.updateQuery(e.target.value)}
             />
+          </Debounce>
           </div>
         </div>
 
@@ -100,7 +103,7 @@ class SearchBooks extends React.Component{
                     style={{
                       width: 128,
                       height: 193,
-                      backgroundImage: try {"url(" + book.imageLinks.thumbnail + ")" catch (error){ 'nothing'}
+                      backgroundImage: (typeof book.imageLinks === 'undefined') ? ' ' : "url(" + book.imageLinks.thumbnail + ")"
                     }}
                   />
                   <div className="book-shelf-changer">
