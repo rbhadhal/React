@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import Book from './Book'
+
 import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
 

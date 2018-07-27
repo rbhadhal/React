@@ -2,7 +2,7 @@ import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import {Link} from 'react-router-dom';
 import { Debounce } from 'react-throttle';
-import Rx from 'rxjs-compat/Rx';
+
 import './App.css';
 import Book from './Book';
 
@@ -13,17 +13,14 @@ class SearchBooks extends React.Component{
   };
   //searchInput:  Rx.Subject<any>;
 
-  constructor() {
-      super();
 
-
-    //  });
-    }
 
   updateBookOnSearch = (book: any, shelf: string) => {
     let t = this.state.books;
     const bookToUpdate = t.filter(b => b.id === book.id)[0];
     bookToUpdate.shelf = shelf;
+    // take a pointer to the book after we find it in our set in the state
+    // update its shelf so that the search page reflects the change
     this.setState({
       books: t
     });
@@ -50,6 +47,8 @@ class SearchBooks extends React.Component{
         if (book.id === bookOnShelf.id) {
           book.shelf = bookOnShelf.shelf;
         }
+        // get the status of the books already on my shelf and mark those
+        // that are returned in the search.
       });
       return book;
     });
