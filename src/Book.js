@@ -23,7 +23,7 @@ render(){
             this.props.onChange(this.props.book, e.target.value);
           }}
         >
-          <option value="none" disabled>
+          <option value="" disabled>
             Move to...
           </option>
           <option value="currentlyReading">Currently Reading</option>
